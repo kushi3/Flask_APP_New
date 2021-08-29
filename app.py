@@ -19,6 +19,8 @@ from ibm_watson import AssistantV2
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 import time
 from flask_ngrok import run_with_ngrok
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing import image
 
 app = Flask(__name__)
 run_with_ngrok(app)
