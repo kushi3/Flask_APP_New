@@ -115,7 +115,7 @@ def upload_image():
         li = ['Male Formals Shirt', 'Male Formal Pant']
         img = []
         for folder in li:
-            path = "C:/Users/sushanth/Downloads/Final Fashion Dataset/Train/"  + folder
+            path = "static/Train/"  + folder
             for i in range(0,3):
                 random_filename = random.choice([x for x in os.listdir(path) if os.path.isfile(os.path.join(path, x))])
                 img.append(folder + "/" + random_filename)
