@@ -107,19 +107,139 @@ def upload_image():
     print(x)
     preds = model.predict_classes(x)
     print("prediction",preds)
-    index1= ['Female Kurti', 'Female Legin', 'Female Patiala Pant', 'Female Salvar','Male Casual Pant', 'Male Checked Casual Shirt', 'Male Checked Formal Shirt', 'Male Formals Pant', 'Male Formals Shirt', 'Male Plain Casual Shirt', 'Male Plain T-Shirt',  'Male Striped Casual Shirt', 'Male Striped Formal Shirt', 'Male Striped T-Shirt']
-    index = ['Bag', 'Bangle', 'Belt', 'Bracelet', 'Cap', 'Casual Shoes', 'Cooling Glass', 'Earrings', 'Female Ballerina Flat Sandal', 'Female Casual Pant', 'Female Checked Casual Shirt', 'Female Club Wear Top', 'Female Collar T-Shirt', 'Female Fashion Layered Top', 'Female Flat Sandal', 'Female Formal Pant', 'Female Formal Shirt', 'Female Gathering Pant', 'Female Gladiator Sandal', 'Female Graphic T-Shirt', 'Female Heels', 'Female Jean Pant', 'Female Jerkin', 'Female Kurti', 'Female Legin', 'Female Patiala Pant', 'Female Round-Neck T-Shirt', 'Female Salvar', 'Female Sarees', 'Female Short Sleeve Top', 'Female Shorts', 'Female Skirts', 'Female Sleeve Top', 'Female Sleeveless Top', 'Female Sportswear T-shirt', 'Female Strap Sandal', 'Female Strip Top', 'Female Tank Top', 'Female Tracksuit Pants', 'Female Tube Top', 'Female V-Neck T-Shirt', 'Formal Shoes', 'Handbag', 'Male Belt Sandal', 'Male Casual Pant', 'Male Checked Casual Shirt', 'Male Checked Formal Shirt', 'Male Collar T-Shirt', 'Male Flat Sandal', 
-    'Male Formal Pant', 'Male Formals Shirt', 'Male Graphic T-Shirt', 'Male Jean Pant', 'Male Jerkin', 'Male Kurta', 'Male Plain Casual Shirt', 'Male Plain T-Shirt', 'Male Round-Neck T-Shirt', 'Male Shorts', 'Male Sportswear T-Shirt', 'Male Strap Sandal', 'Male Striped Casual Shirt', 'Male Striped Formal Shirt', 'Male Striped T-Shirt', 'Male Tracksuit Pant', 'Male V-Neck T-Shirt', 'Male West Coat', 'Necklace', 'Purse', 'Ring', 'Socks', 'Sports Shoes', 'Stole', 'Tie', 'Wallet', 'Watch']
+    index1= ['Female Kurti', 'Female Legin', 'Female Patiala Pant', 'Female Salvar',
+             'Male Casual Pant', 'Male Checked Casual Shirt',
+             'Male Checked Formal Shirt', 'Male Formals Pant',
+             'Male Formals Shirt', 'Male Plain Casual Shirt', 'Male Plain T-Shirt',
+             'Male Striped Casual Shirt', 'Male Striped Formal Shirt',
+             'Male Striped T-Shirt']
     class_name = str(index1[preds[0]])
-    if(class_name == "Male Formals Shirt"):
-        li = ['Male Formals Shirt', 'Male Formal Pant']
+    if(class_name == "Female Kurti"):
+        li = ['Female Kurti', 'Female Legin', 'Female Sleeve Top', 'Earrings', 'Female Flat Sandal']
         img = []
         for folder in li:
-            path = "static/Train/"  + folder
-            for i in range(0,3):
+            path = "static/Display_Images/"  + folder
+            for i in range(0,2):
                 random_filename = random.choice([x for x in os.listdir(path) if os.path.isfile(os.path.join(path, x))])
                 img.append(folder + "/" + random_filename)
-        print(img)
+            print(img)
+    if(class_name == "Female Legin"):
+        li = ['Female Legin', 'Female Sleeve Top', 'Female Kurti', 'Female Salvar', 'Female Gladiator Sandal']
+        img = []
+        for folder in li:
+            path = "static/Display_Images"  + folder
+            for i in range(0,2):
+                random_filename = random.choice([x for x in os.listdir(path) if os.path.isfile(os.path.join(path, x))])
+                img.append(folder + "/" + random_filename)
+            print(img)
+    if(class_name == "Female Patiala Pant"):
+        li = ['Female Patiala Pant', 'Female Sleeve Top', 'Female Kurti', 'Female Salvar', 'Female Flat Sandal']
+        img = []
+        for folder in li:
+            path = "static/Display_Images"  + folder
+            for i in range(0,2):
+                random_filename = random.choice([x for x in os.listdir(path) if os.path.isfile(os.path.join(path, x))])
+                img.append(folder + "/" + random_filename)
+            print(img)
+    if(class_name == "Female Salvar"):
+        li = ['Female Salvar', 'Female Patiala Pant', 'Female Sleeve Top', 'Earrings', 'Female Gladiator Sandal']
+        img = []
+        for folder in li:
+            path = "static/Display_Images"  + folder
+            for i in range(0,2):
+                random_filename = random.choice([x for x in os.listdir(path) if os.path.isfile(os.path.join(path, x))])
+                img.append(folder + "/" + random_filename)
+            print(img)
+    if(class_name == "Male Casual Pant"):
+        li = ['Male Casual Pant', 'Male Formals Shirt', 'Male Striped Casual Shirt', 'Male Striped Formal Shirt', 'Casual Shoes']
+        img = []
+        for folder in li:
+            path = "static/Display_Images"  + folder
+            for i in range(0,2):
+                random_filename = random.choice([x for x in os.listdir(path) if os.path.isfile(os.path.join(path, x))])
+                img.append(folder + "/" + random_filename)
+            print(img)
+    if(class_name == "Male Checked Casual Shirt"):
+        li = ['Male Checked Casual Shirt', 'Male Casual Pant', 'Male Jean Pant', 'Watch', 'Casual Shoes']
+        img = []
+        for folder in li:
+            path = "static/Display_Images"  + folder
+            for i in range(0,2):
+                random_filename = random.choice([x for x in os.listdir(path) if os.path.isfile(os.path.join(path, x))])
+                img.append(folder + "/" + random_filename)
+            print(img)
+    if(class_name == "Male Checked Formal Shirt"):
+        li = ['Male Checked Formal Shirt', 'Male Formal Pant', 'Tie', 'Belt', 'Formal Shoes']
+        img = []
+        for folder in li:
+            path = "static/Display_Images"  + folder
+            for i in range(0,2):
+                random_filename = random.choice([x for x in os.listdir(path) if os.path.isfile(os.path.join(path, x))])
+                img.append(folder + "/" + random_filename)
+                print(img)
+    if(class_name == "Male Formals Pant"):
+        li = ['Male Formal Pant', 'Male Formals Shirt', 'Male Striped Formal Shirt', 'Belt', 'Formal Shoes']
+        img = []
+        for folder in li:
+            path = "C:/Users/sushanth/Desktop/New Flask/static/Display_Images"  + folder
+            for i in range(0,2):
+                random_filename = random.choice([x for x in os.listdir(path) if os.path.isfile(os.path.join(path, x))])
+                img.append(folder + "/" + random_filename)
+            print(img)
+    if(class_name == "Male Formals Shirt"):
+        li = ['Male Formals Shirt', 'Male Formal Pant', 'Tie', 'Belt', 'Formal Shoes']
+        img = []
+        for folder in li:
+            path = "static/Display_Images"  + folder
+            for i in range(0,2):
+                random_filename = random.choice([x for x in os.listdir(path) if os.path.isfile(os.path.join(path, x))])
+                img.append(folder + "/" + random_filename)
+            print(img)
+    if(class_name == "Male Plain Casual Shirt"):
+        li = ['Male Plain Casual Shirt', 'Male Casual Pant', 'Male Jean Pant', 'Watch', 'Casual Shoes']
+        img = []
+        for folder in li:
+            path = "static/Display_Images"  + folder
+            for i in range(0,2):
+                random_filename = random.choice([x for x in os.listdir(path) if os.path.isfile(os.path.join(path, x))])
+                img.append(folder + "/" + random_filename)
+            print(img)
+    if(class_name == "Male Plain T-Shirt"):
+        li = ['Male Plain T-Shirt', 'Male Jean Pant', 'Cooling Glass', 'Male Belt Sandal', 'Casual Shoes']
+        img = []
+        for folder in li:
+            path = "static/Display_Images"  + folder
+            for i in range(0,2):
+                random_filename = random.choice([x for x in os.listdir(path) if os.path.isfile(os.path.join(path, x))])
+                img.append(folder + "/" + random_filename)
+            print(img)
+    if(class_name == "Male Striped Casual Shirt"):
+        li = ['Male Striped Casual Shirt', 'Male Casual Pant', 'Male Jean Pant', 'Watch', 'Casual Shoes']
+        img = []
+        for folder in li:
+            path = "static/Display_Images"  + folder
+            for i in range(0,2):
+                random_filename = random.choice([x for x in os.listdir(path) if os.path.isfile(os.path.join(path, x))])
+                img.append(folder + "/" + random_filename)
+            print(img)
+    if(class_name == "Male Striped Formal Shirt"):
+        li = ['Male Striped Formal Shirt', 'Male Formal Pant', 'Tie', 'Belt', 'Formal Shoes']
+        img = []
+        for folder in li:
+            path = "static/Display_Images"  + folder
+            for i in range(0,2):
+                random_filename = random.choice([x for x in os.listdir(path) if os.path.isfile(os.path.join(path, x))])
+                img.append(folder + "/" + random_filename)
+            print(img)
+    if(class_name == "Male Striped T-Shirt"):
+        li = ['Male Striped T-Shirt', 'Male Jean Pant', 'Cooling Glass', 'Male Belt Sandal', 'Casual Shoes']
+        img = []
+        for folder in li:
+            path = "static/Display_Images"  + folder
+            for i in range(0,2):
+                random_filename = random.choice([x for x in os.listdir(path) if os.path.isfile(os.path.join(path, x))])
+                img.append(folder + "/" + random_filename)
+            print(img)
     links=[]
     links1=[]
     l=class_name
