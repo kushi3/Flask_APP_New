@@ -92,7 +92,7 @@ def fashion_suits_me():
     return render_template('fashion.html')
 
 @app.route('/', methods=['POST'])
-def upload_image():
+def upload_image1():
     file = request.files['file']
     basepath = os.path.dirname(__file__)
     print("current path", basepath)
