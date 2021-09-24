@@ -1,5 +1,6 @@
 '''
 This file implements the results from server to clients' requests
+
 '''
 import requests
 import optparse
