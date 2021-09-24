@@ -13,7 +13,6 @@ from tensorflow.python.platform import gfile
 import time
 
 class JPP(object):
-    
     # Magic numbers are for normalization. You can get details from original JPP-Net repo.
     IMG_MEAN = np.array((104.00698793,116.66876762,122.67891434), dtype=np.float32)
     
