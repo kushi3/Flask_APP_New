@@ -1,9 +1,4 @@
-'''
-本文件负责VTO的flask web服务端
-提供web服务、响应客户端预测请求
-This file implements the web server on flask.
-It can provide web service, response all predict requests.
-'''
+
 import os
 from flask import Flask, render_template, request, url_for, send_from_directory
 from PIL import Image
@@ -60,7 +55,7 @@ for cloth in cloth_list_raw:
 
 
 # Use "/web" url to get web page
-@app.route('/web')
+@app.route('/')
 def hello_world():
     return render_template('login.html', img_list=cloth_list)
 
@@ -91,10 +86,7 @@ def upload_image():
 
 
 def run_model_web(f, cloth_name, cloth_f=None):
-    '''
-    为web服务进行预测。cloth_name和cloth_f中必有一个有内容，优先选择cloth_f，即用户上传的衣服图片
-    prediction service. cloth_name and cloth_f cannot be both None. cloth_f is prior, which is from user upload.
-    '''
+   
     if cloth_f is None:
         print(f, cloth_name)
         c_img = np.array(Image.open(cloth_name))
@@ -106,7 +98,7 @@ def run_model_web(f, cloth_name, cloth_f=None):
         except:
             c_img = np.array(Image.open(cloth_name))
 
-    # 固化到本地的缓存文件夹，访问的时候作为静态资源被调用
+  
     # local resource temp file would be used as static resource.
     temp_o_name = os.path.join("static", "result", "%d_%s" % (
         int(time.time()), cloth_name.split("/")[-1]))
@@ -160,7 +152,7 @@ server:
 @app.route('/cloth', methods=['GET', 'POST'])
 def Hello_cloth():
     '''
-    响应客户端请求
+ 
     reponse requests from clients
     '''
     output_str = ""
