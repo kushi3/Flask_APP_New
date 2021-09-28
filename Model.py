@@ -1,5 +1,4 @@
 '''
-
 This file implements the whole virtual try-on networks.
 After initiation with init(pathes...), you can call predict(...)
 '''
@@ -27,14 +26,28 @@ class Model(object):
 
     def __init__(self, pb_path, gmm_path, tom_path, use_cuda=True):
         '''
-        
+       
         parameters: 3 pre-trained model(JPP, GMM, TOM) files' pathes
         '''
         self.jpp = JPP(pb_path)
         self.cpvton = CPVTON(gmm_path, tom_path, use_cuda=use_cuda)
 
     def predict(self, human_img, c_img, need_pre=True, need_bright=False, keep_back=False, need_dilate=False, check_dirty=False):
-      
+        '''
+        
+
+        parameters: 
+            human_img: human's image
+            c_img: cloth image with the shape of (256,192,3) RGB
+            need_pre: need preprocessing, including crop and zoom 
+            need_bright: brightness enhancement
+            keep_back: keep image's background
+            need_dilate: if keep_back is True, and you need dilate the mask
+            check_dirty: check limb cross
+        return: 
+            a (256, 192, 3) image with specified people wearing specified clothes,
+            confidence of this image
+        '''
         if need_bright:
             enh_bri = ImageEnhance.Brightness(Image.fromarray(human_img))
             human_img = np.array(enh_bri.enhance(1.3))
@@ -67,14 +80,14 @@ class Model(object):
                            0], axes=(1, 2, 0))+1)/2*255, dtype='uint8')
 
         if keep_back:
-           
+            
             # keep arms & background
             if len(parse.shape) == 2:
                 parse = parse.reshape((256, 192, 1))
             cloth_mask = np.array(parse == 5, dtype='float32')
 
             if need_dilate:  # revise mask
-               
+                # 膨胀后边缘虚化
                 # Edge emptiness after dilate
                 cloth = cloth_mask[:, :, 0]
                 kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (18, 18))
@@ -96,8 +109,7 @@ class Model(object):
 
     def __getPoseData__(self, pose):
         '''
-       
-
+        
         parameters: JPP-Net's output, pose keypoints
         return: Pose data, a part of CP-VTON's input.
                 And result's confidence, computed by the min value of 12 eight-neighborhood keypoints' confidence 
@@ -126,7 +138,8 @@ class Model(object):
 
     def __getPoseMap__(self, pose_data):
         '''
-       
+        
+
         parameters: pose data with the shape of (16,3) [x,y,confidence]
         return: a pose map array with the shape (?, ?, 3) from drawing a 3*3 white (max value) square at every pose position as a part of human feature
         '''
@@ -151,7 +164,8 @@ class Model(object):
         return pose_map
 
     def __cropByPoseData__(self, img, pose_data, parse):
-       
+        '''
+        
 
         crop and scale picture to get 256*192 resolution
         rules: based on the hightest & lowest pose, crop 120% distance and zoom it to right scale
@@ -171,7 +185,7 @@ class Model(object):
         bounder = min(max([pose_data[2][1], pose_data[3][1],
                            pose_data[10][1], pose_data[15][1]])+int(pre_height*0.2), h)
 
-      
+        
         # left & right position
         height = bounder - upper
         width = int(height/4*3)
@@ -190,7 +204,7 @@ class Model(object):
             right = w-1
             left = max(left-change-(change-(w-right)), 0)
         else:
-             can't crop
+            
             return None
 
         left = int(left)
@@ -211,7 +225,7 @@ class Model(object):
 
         new_img = np.array(img[upper:bounder, left:right, :])
 
-      
+        
         # crop parse result. WARNING! An apparent loss would happen here
         parse = parse[upper:bounder, left:right, :]
 
@@ -225,6 +239,7 @@ class Model(object):
 
     def __get_K_b__(self, b, c):
         '''
+       
         get gradient K and bias b of the line
         '''
         if b[0] == c[0]:
@@ -236,7 +251,7 @@ class Model(object):
 
     def __upon_line__(self, a, KB):
         '''
-      
+        
         point A is higher than the line with specified gradient K and bias b?
         '''
         K, B = KB
@@ -248,8 +263,7 @@ class Model(object):
     # reverse
     def __right_line__(self, a, KB, x):
         '''
-      
-
+        
         point A is on the left side of the line with specified gradient K and bias b?
         x is a random point's value on the abscissa, which would be used for vertical line case
         '''
@@ -274,7 +288,7 @@ class Model(object):
         a->leftup, b->leftdown, c->rightdown, d->rightup
         Note: For JPP Net's output poses, the order is [10,15,12,2,3,13]
         '''
-        dirty
+        
         # not dirty if wrists are close to these four points
         margin = 250
         KB_list = [self.__get_K_b__(a, b), self.__get_K_b__(
